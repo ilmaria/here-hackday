@@ -1,7 +1,7 @@
 var platform = new H.service.Platform({
   useCIT: true,
-  app_id: "{YOUR_APP_ID}",
-  app_code: "{YOUR_APP_CODE}"
+  app_id: "3CbRKU6RtPhIp2t4OzQI",
+  app_code: "gfHFsKFQlPRuScYyeLMIAA"
 });
 
 // Obtain an Explore object through which to submit search requests:
