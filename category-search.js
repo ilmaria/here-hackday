@@ -1,48 +1,51 @@
 (function() {
   // Obtain an Explore object through which to submit search requests:
-  var explore = new H.places.Explore(Platform.getPlacesService()),
+  var explore = new H.places.Explore(platform.getPlacesService()),
     exploreResult,
     error;
+
+  // Create a group object to hold map markers:
+  var group = new H.map.Group();
+
+  // Create the default UI components:
+  var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
+
+  // Add the group object to the map:
+  map.addObject(group);
 
   // Define search parameters:
   var params = {
     // Look for places matching the category "eat and drink":
     cat: "eat-drink",
     // Search in the Chinatown district in San Francisco:
-    in: "24.9410248,-60.1733244"
+    at: "60.1733244,24.9410248"
   };
-  console.log("here", HEREmap, HEREmap.getViewPort());
-
-  /*var headers = {
-    // Location context in header based on map view of the device:
-    "X-Map-Viewport": "13.3704,52.5122,13.4194,52.5262"
-  };*/
-
-  /*var svgMarkup =
-    '<svg width="24" height="24" ' +
-    'xmlns="http://www.w3.org/2000/svg">' +
-    '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-    'height="22" /><text x="12" y="18" font-size="12pt" ' +
-    'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-    'fill="white">H</text></svg>';*/
 
   // Define a callback function to handle data on success:
   function onResult(data) {
-    /*console.log("hiphuraa!");
-    exploreResult = data;
-
-    var icon = new H.map.Icon(svgMarkup),
-      coords = { lat: 60.1733244, lng: 24.9410248 },
-      marker = new H.map.Marker(coords, { icon: icon });
-    HEREmap.addObject(marker);
-    HEREmap.setCenter(coords);*/
+    addPlacesToMap(data.results);
   }
 
   // Define a callback function to handle errors:
   function onError(data) {
+    console.log("errorr", data);
     error = data;
   }
 
+  // This function adds markers to the map, indicating each of
+  // the located places:
+  function addPlacesToMap(result) {
+    group.addObjects(
+      result.items.map(function(place) {
+        var marker = new H.map.Marker({
+          lat: place.position[0],
+          lng: place.position[1]
+        });
+        return marker;
+      })
+    );
+  }
+
   // Run a search request with parameters, headers (empty), and callback functions:
-  explore.request(params, headers, onResult, onError);
+  explore.request(params, {}, onResult, onError);
 })();

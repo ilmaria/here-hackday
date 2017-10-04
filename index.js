@@ -1,13 +1,13 @@
-window.Platform = new H.service.Platform({
+window.platform = new H.service.Platform({
   useCIT: true,
   app_id: "3CbRKU6RtPhIp2t4OzQI",
   app_code: "gfHFsKFQlPRuScYyeLMIAA"
 });
 
-var maptypes = Platform.createDefaultLayers();
+var maptypes = platform.createDefaultLayers();
 
 // Instantiate (and display) a map object:
-window.HEREmap = new H.Map(
+window.map = new H.Map(
   document.getElementById("mapContainer"),
   maptypes.normal.map,
   {
