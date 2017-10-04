@@ -4,14 +4,19 @@
     exploreResult,
     error;
 
-  // Create a group object to hold map markers:
-  var group = new H.map.Group();
+  // Enable the event system on the map instance:
+  var mapEvents = new H.mapevents.MapEvents(map);
+
+  // Add event listener:
+  map.addEventListener("tap", function(evt) {
+    // Log 'tap' and 'mouse' events:
+    console.log(evt.type, evt.currentPointer.type);
+  });
+
+  var behavior = new H.mapevents.Behavior(mapEvents);
 
   // Create the default UI components:
   var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
-
-  // Add the group object to the map:
-  map.addObject(group);
 
   // Define search parameters:
   var params = {
@@ -35,15 +40,30 @@
   // This function adds markers to the map, indicating each of
   // the located places:
   function addPlacesToMap(result) {
-    group.addObjects(
-      result.items.map(function(place) {
-        var marker = new H.map.Marker({
-          lat: place.position[0],
-          lng: place.position[1]
-        });
-        return marker;
-      })
-    );
+    console.log("fdsaf", result);
+    result.items.map(function(place) {
+      var group = new H.map.Group();
+      var marker = new H.map.Marker({
+        lat: place.position[0],
+        lng: place.position[1]
+      });
+      group.addObject(marker);
+      map.addObject(group);
+      marker.addEventListener("tap", function(e) {
+        console.log("hei");
+        var bubble = new H.ui.InfoBubble(
+          {
+            lat: place.position[0],
+            lng: place.position[1]
+          },
+          {
+            content: place.title
+          }
+        );
+        ui.addBubble(bubble);
+      });
+      return marker;
+    });
   }
 
   // Run a search request with parameters, headers (empty), and callback functions:
