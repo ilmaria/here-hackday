@@ -6,20 +6,34 @@
 
   // Enable the event system on the map instance:
   var mapEvents = new H.mapevents.MapEvents(map);
-
   var behavior = new H.mapevents.Behavior(mapEvents);
 
   // Create the default UI components:
   var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
 
-  var currentPos = '60.1733244,24.9410248';
+  var currentPos = [60.1733244, 24.9410248];
   // Define search parameters:
   var params = {
     // Look for places matching the category "eat and drink":
     cat: 'eat-drink',
     // Search in the Chinatown district in San Francisco:
-    at: currentPos
+    at: currentPos.join()
   };
+
+  var icon = new H.map.DomIcon(
+    '<svg height="26" width="26">' +
+      '<circle cx="13" cy="13" r="10" stroke="black" stroke-width="3" fill="red" />' +
+      '</svg>'
+  );
+  var currentPosGroup = new H.map.Group();
+  var currentPosMarker = new H.map.DomMarker(
+    { lat: currentPos[0], lng: currentPos[1] },
+    {
+      icon: icon
+    }
+  );
+  currentPosGroup.addObject(currentPosMarker);
+  map.addObject(currentPosGroup);
 
   // Define a callback function to handle data on success:
   function onResult(data) {
@@ -43,7 +57,7 @@
       group.addObject(marker);
       map.addObject(group);
 
-      timeToLocation(currentPos, place.position).then(function(data) {
+      timeToLocation(currentPos.join(), place.position).then(function(data) {
         marker.addEventListener('tap', function(e) {
           var bubble = new H.ui.InfoBubble(
             {
