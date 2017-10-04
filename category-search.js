@@ -12,12 +12,13 @@
   // Create the default UI components:
   var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
 
+  var currentPos = '60.1733244,24.9410248';
   // Define search parameters:
   var params = {
     // Look for places matching the category "eat and drink":
-    cat: "eat-drink",
+    cat: 'eat-drink',
     // Search in the Chinatown district in San Francisco:
-    at: "60.1733244,24.9410248"
+    at: currentPos
   };
 
   // Define a callback function to handle data on success:
@@ -41,18 +42,26 @@
       });
       group.addObject(marker);
       map.addObject(group);
-      marker.addEventListener("tap", function(e) {
-        var bubble = new H.ui.InfoBubble(
-          {
-            lat: place.position[0],
-            lng: place.position[1]
-          },
-          {
-            content: place.title
-          }
-        );
-        ui.addBubble(bubble);
+
+      timeToLocation(currentPos, place.position).then(function(data) {
+        marker.addEventListener('tap', function(e) {
+          var bubble = new H.ui.InfoBubble(
+            {
+              lat: place.position[0],
+              lng: place.position[1]
+            },
+            {
+              content:
+                place.title +
+                ' - ' +
+                (data.response.route[0].summary.travelTime / 60).toFixed(0) +
+                ' min'
+            }
+          );
+          ui.addBubble(bubble);
+        });
       });
+
       return marker;
     });
   }
