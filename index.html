@@ -25,24 +25,27 @@
 </head>
 
 <body>
+  <select id="menu"
+          onchange="changeCategory()"
+          style="float: right">
+        <option value="eat-drink">Ruokapaikat</option>
+        <option value="going-out">Biletys</option>
+        <option value="sights-museums">Nähtävyydet ja museot</option>
+        <option value="transport">Julkinen liikenne</option>
+        <option value="accommodation">Majoitus</option>
+        <option value="shopping">Shoppailu</option>
+        <option value="leisure-outdoor">Virkistyskohteet</option>
+        <option value="administrative-areas-buildings">Virastot ja vogonilaivasto</option>
+        <option value="natural-geographical">Puistot ja uonnonnähtävyydet</option>
+        <option value="petrol-station">Huoltoasemat</option>
+        <option value="atm-bank-exchange">Käteisautomaatit</option>
+        <option value="toilet-rest-area">Julkiset WC:t</option>
+        <option value="hospital-health-care-facility">Sairaalat ja muu kiva</option>
+
+      </select>
   <div style="width: 640px; height: 480px"
        id="mapContainer"></div>
-  <select>
-    <option value="eat-drink">Ruokapaikat</option>
-    <option value="going-out">Biletys</option>
-    <option value="sights-museums">Nähtävyydet ja museot</option>
-    <option value="transport">Julkinen liikenne</option>
-    <option value="accommodation">Majoitus</option>
-    <option value="shopping">Shoppailu</option>
-    <option value="leisure-outdoor">Puistot</option>
-    <option value="administrative-areas-buildings">Virastot ja vogonilaivasto</option>
-    <option value="natural-geographical">Luonnonnähtävyydet</option>
-    <option value="petrol-station">Huoltoasemat</option>
-    <option value="atm-bank-exchange">Käteisautomaatit</option>
-    <option value="toilet-rest-area">Julkiset WC:t</option>
-    <option value="hospital-health-care-facility">Sairaalat ja muu kiva</option>
 
-  </select>
 
   <script src="index.js"></script>
   <script src="category-search.js"></script>
