@@ -7,12 +7,6 @@
   // Enable the event system on the map instance:
   var mapEvents = new H.mapevents.MapEvents(map);
 
-  // Add event listener:
-  map.addEventListener("tap", function(evt) {
-    // Log 'tap' and 'mouse' events:
-    console.log(evt.type, evt.currentPointer.type);
-  });
-
   var behavior = new H.mapevents.Behavior(mapEvents);
 
   // Create the default UI components:
@@ -33,14 +27,12 @@
 
   // Define a callback function to handle errors:
   function onError(data) {
-    console.log("errorr", data);
     error = data;
   }
 
   // This function adds markers to the map, indicating each of
   // the located places:
   function addPlacesToMap(result) {
-    console.log("fdsaf", result);
     result.items.map(function(place) {
       var group = new H.map.Group();
       var marker = new H.map.Marker({
@@ -50,7 +42,6 @@
       group.addObject(marker);
       map.addObject(group);
       marker.addEventListener("tap", function(e) {
-        console.log("hei");
         var bubble = new H.ui.InfoBubble(
           {
             lat: place.position[0],
